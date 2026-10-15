@@ -1,12 +1,23 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MilestoneTracker } from './milestone-tracker/milestone-tracker';
+import { ProgressNotes } from './progress-notes/progress-notes';
+import { ProjectOverview } from './project-overview/project-overview';
+import { TechnologyChecklist } from './technology-checklist/technology-checklist';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    MilestoneTracker,
+    ProgressNotes,
+    ProjectOverview,
+    TechnologyChecklist
+  ],
   templateUrl: './app.html',
+  styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('project-prograss-tracker');
+  title = 'Project Progress Tracker';
 }
