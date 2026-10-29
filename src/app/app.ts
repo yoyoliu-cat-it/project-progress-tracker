@@ -4,6 +4,7 @@ import { MilestoneTracker } from './milestone-tracker/milestone-tracker';
 import { ProgressNotes } from './progress-notes/progress-notes';
 import { ProjectOverview } from './project-overview/project-overview';
 import { TechnologyChecklist } from './technology-checklist/technology-checklist';
+import { MilestoneApi } from './milestone-api/milestone-api';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { TechnologyChecklist } from './technology-checklist/technology-checklist
     MilestoneTracker,
     ProgressNotes,
     ProjectOverview,
-    TechnologyChecklist
+    TechnologyChecklist,
+    MilestoneApi
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
