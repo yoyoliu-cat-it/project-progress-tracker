@@ -1,0 +1,182 @@
+
+<section class="page">
+
+  <h1>Project Progress Tracker - MongoDB</h1>
+
+  <p class="description">
+    Create, view, update, and delete project records.
+  </p>
+
+  <!-- Success and error messages -->
+  @if (message) {
+    <p class="success-message">{{ message }}</p>
+  }
+
+  @if (errorMessage) {
+    <p class="error-message">{{ errorMessage }}</p>
+  }
+
+  <!-- Create and Update Form -->
+  <div class="component-card">
+
+    <h2>
+      {{ editingProjectId ? 'Edit Project' : 'Add New Project' }}
+    </h2>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+
+      <label for="projectName">Project Name:</label>
+      <input
+        id="projectName"
+        type="text"
+        formControlName="projectName"
+        placeholder="Enter project name">
+
+      <label for="description">Description:</label>
+      <input
+        id="description"
+        type="text"
+        formControlName="description"
+        placeholder="Enter project description">
+
+      <label for="startDate">Start Date:</label>
+      <input
+        id="startDate"
+        type="date"
+        formControlName="startDate">
+
+      <label for="status">Status:</label>
+      <select id="status" formControlName="status">
+        <option value="Not Started">Not Started</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+
+      <label for="teamMember">Team Member:</label>
+      <input
+        id="teamMember"
+        type="text"
+        formControlName="teamMember"
+        placeholder="Enter team member name">
+
+      <label for="progressNote">Progress Note:</label>
+      <textarea
+        id="progressNote"
+        formControlName="progressNote"
+        placeholder="Enter progress notes">
+      </textarea>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          [disabled]="projectForm.invalid">
+
+          {{ editingProjectId ? 'Update Project' : 'Save Project' }}
+        </button>
+
+        @if (editingProjectId) {
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="resetForm()">
+            Cancel Edit
+          </button>
+        }
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Project List -->
+  <div class="component-card">
+
+    <h2>Project Records</h2>
+
+    <button
+      type="button"
+      class="secondary-button"
+      (click)="loadProjects()">
+      Refresh Projects
+    </button>
+
+    @for (project of projects; track project._id) {
+
+      <div class="project-item">
+
+        <h3>{{ project.projectName }}</h3>
+
+        <p><strong>Status:</strong> {{ project.status }}</p>
+        <p><strong>Team Member:</strong> {{ project.teamMember }}</p>
+
+        <div class="button-group">
+
+          <button
+            type="button"
+            (click)="viewProject(project._id)">
+            View Details
+          </button>
+
+          <button
+            type="button"
+            (click)="editProject(project._id)">
+            Edit
+          </button>
+
+          <button
+            type="button"
+            class="delete-button"
+            (click)="deleteProject(project._id)">
+            Delete
+          </button>
+
+        </div>
+      </div>
+
+    } @empty {
+      <p>No projects found.</p>
+    }
+
+  </div>
+
+  <!-- Selected Project Details -->
+  @if (selectedProject) {
+
+    <div class="component-card">
+
+      <h2>Project Details</h2>
+
+      <p><strong>Project Name:</strong>
+        {{ selectedProject.projectName }}
+      </p>
+
+      <p><strong>Description:</strong>
+        {{ selectedProject.description }}
+      </p>
+
+      <p><strong>Start Date:</strong>
+        {{ selectedProject.startDate.substring(0, 10) }}
+      </p>
+
+      <p><strong>Status:</strong>
+        {{ selectedProject.status }}
+      </p>
+
+      <p><strong>Team Member:</strong>
+        {{ selectedProject.teamMember }}
+      </p>
+
+      <p><strong>Progress Note:</strong>
+        {{ selectedProject.progressNote }}
+      </p>
+
+      <button
+        type="button"
+        class="secondary-button"
+        (click)="selectedProject = null">
+        Close Details
+      </button>
+
+    </div>
+  }
+
+</section>
